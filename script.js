@@ -1,34 +1,24 @@
-function getposts() {
+fetch("https://rickandmortyapi.com/api/character")
+  .then(res => res.json())
+  .then(x => {
 
-    function getposts() {
-        let request = new XMLHttpRequest();
-        request.open("GET", "https://rickandmortyapi.com/api/character");
-        request.responseType = "json";
-        request.send();
-        request.onload = function() {
-            if (request.status >= 200 && request.status < 300) {
-                let posts = request.response;
+    let container = document.getElementById("content-container");
+    
+    for (let i = 0; i < x.results.length; i++) {
+      let content = document.createElement("div");
+      content.id = "content";
+      
+      let h2 = document.createElement("h2");
+      h2.textContent = x.results[i].name;
+      content.appendChild(h2);
 
-                document.getElementById("contenr").innerHTML = ""
-    
-                for (const character of posts.results) {
-                    let conteent = `
-                        <div class="div1" id="div">
-                            <h2>${character.name}</h2>
-                            <img src="${character.image}">
-                        </div>
-                    `;
-    
-                    document.getElementById("contenr").innerHTML += conteent;
-                }
-            } else {
-                alert("error");
-            }
-        };
+      let img = document.createElement("img");
+      img.src = x.results[i].image;
+      img.id = 'imgg';
+      content.appendChild(img);
+
+      container.appendChild(content);
     }
-    
-    getposts();
 
-}
-
-getposts()
+   
+  });
